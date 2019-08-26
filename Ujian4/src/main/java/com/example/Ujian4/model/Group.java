@@ -37,6 +37,10 @@ public class Group {
     @SerializedName("status")
     @Expose
     private Integer status;
+    
+//    @ManyToOne
+//    @JoinColumn(name = "id")
+//    private Personnel personnel;
 
     public Integer getId() {
         return id;
@@ -101,5 +105,13 @@ public class Group {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+//	public Personnel getPersonnel() {
+//		return personnel;
+//	}
+//
+//	public void setPersonnel(Personnel personnel) {
+//		this.personnel = personnel;
+//	}
 
 }

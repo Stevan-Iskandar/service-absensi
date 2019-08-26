@@ -30,22 +30,41 @@ public class Controller {
 		private static final Controller INSTANCE = new Controller();
 	}
 	
-//	
+//	==================================================FUNGSI==================================================
 	
 	public void addUser() {
 		user = new User();
 		personnel = new Personnel();
 		position = new Position();
 		group = new Group();
-		
+
+		group.setId(1);
+		group.setCode("RGU1-PJK1-KLN1-KCB1-JN1");
+		group.setName("Regu 1 (PJK1-KLN1-KCB1-JN1)");
+		group.setProjectId(1);
+		group.setMinimumPersonnel(5);
+		group.setDescription("Regu 1 - PJK1 - KLN1 - KCB1 - JN1");
+		group.setAttendanceQrCode("abcdefghijklmnopqrstuvwxyz");
+		group.setStatus(1);
+
+		position.setId(3);
+		position.setCode("PROGRAMMER");
+		position.setName("programmer");
+		position.setDescription("programmer");
+		position.setStatus(1);
+		position.setCreatedByUserId(1);
+		position.setCreatedAt("2019-04-23 05:38:50");
+		position.setUpdatedByUserId(null);
+		position.setUpdatedAt(null);
+		position.setDeletedByUserId(null);
+		position.setDeletedAt(null);
+
 		user.setId(2);
 		user.setUsername("Aldi");
 		user.setEmail("aldi@klien1.co.id");
-		user.setPersonnel(personnel);
-		
+
 		personnel.setId(2);
 		personnel.setCode("PERSONNEL/PROGRAMMER1");
-		personnel.setUserId(user.getId());
 		personnel.setPhotoUrl("http://localhost/storage/JN1/programmer/profile/D0JH0sJ1X2Kf0D7nqlPPhM4oNw0oKOTS9cwZqhI2.jpeg");
 		personnel.setFirstName("Johar");
 		personnel.setMiddleName("Adi");
@@ -61,37 +80,16 @@ public class Controller {
 		personnel.setFirebaseToken(null);
 		personnel.setDeviceId("Nomor IMEI");
 		personnel.setPosition(position);
-		
-		position.setId(3);
-		position.setCode("PROGRAMMER");
-		position.setName("programmer");
-		position.setDescription("programmer");
-		position.setStatus(1);
-		position.setCreatedByUserId(1);
-		position.setCreatedAt("2019-04-23 05:38:50");
-		position.setUpdatedByUserId(null);
-		position.setUpdatedAt(null);
-		position.setDeletedByUserId(null);
-		position.setDeletedAt(null);
-		
-		group.setId(1);
-		group.setCode("RGU1-PJK1-KLN1-KCB1-JN1");
-		group.setName("Regu 1 (PJK1-KLN1-KCB1-JN1)");
-		group.setProjectId(1);
-		group.setMinimumPersonnel(5);
-		group.setDescription("Regu 1 - PJK1 - KLN1 - KCB1 - JN1");
-		group.setAttendanceQrCode("abcdefghijklmnopqrstuvwxyz");
-		group.setStatus(1);
+		personnel.setGroup(group);
+		personnel.setUser(user);
 		
 		em.getTransaction().begin();
+		em.merge(group);
+		em.merge(position);
 		em.merge(user);
 		em.merge(personnel);
-		em.merge(position);
-		em.merge(group);
 
 		em.getTransaction().commit();
-		
-		System.out.println("coba");
 	}
 	
 	public List<User> getAllUser() {
@@ -101,6 +99,11 @@ public class Controller {
 	
 	public List<User> searchNameUser(String name) {
 		TypedQuery<User> query = em.createQuery("select a from User a where a.complete_name like '%"+name+"%'", User.class);
+		return query.getResultList();
+	}
+	
+	public List<Personnel> getAllPersonnel() {
+		TypedQuery<Personnel> query = em.createQuery("select a from Personnel a", Personnel.class);
 		return query.getResultList();
 	}
 }

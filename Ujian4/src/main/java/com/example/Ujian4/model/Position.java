@@ -46,6 +46,10 @@ public class Position {
 	@SerializedName("deleted_at")
     @Expose
     private String deletedAt;
+	
+//	@ManyToOne
+//    @JoinColumn(name = "id")
+//    private Personnel personnel;
 
     public Integer getId() {
         return id;
@@ -134,5 +138,13 @@ public class Position {
     public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
     }
+
+//	public Personnel getPersonnel() {
+//		return personnel;
+//	}
+//
+//	public void setPersonnel(Personnel personnel) {
+//		this.personnel = personnel;
+//	}
 
 }

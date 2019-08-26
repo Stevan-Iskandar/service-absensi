@@ -1,11 +1,14 @@
 
 package com.example.Ujian4.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,10 +26,12 @@ public class User {
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("personnel")
-    @Expose
-    @Transient
-    private Personnel personnel;
+//    @SerializedName("personnel")
+//    @Expose
+//    @Transient
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Personnel> personnel;
 
     public Integer getId() {
         return id;
@@ -52,11 +57,11 @@ public class User {
         this.email = email;
     }
 
-    public Personnel getPersonnel() {
+    public List<Personnel> getPersonnel() {
         return personnel;
     }
 
-    public void setPersonnel(Personnel personnel) {
+    public void setPersonnel(List<Personnel> personnel) {
         this.personnel = personnel;
     }
 

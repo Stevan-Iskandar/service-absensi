@@ -1,11 +1,14 @@
 
 package com.example.Ujian4.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -20,9 +23,6 @@ public class Personnel {
     @SerializedName("code")
     @Expose
     private String code;
-    @SerializedName("user_id")
-    @Expose
-    private Integer userId;
     @SerializedName("photo_url")
     @Expose
     private String photoUrl;
@@ -65,14 +65,21 @@ public class Personnel {
     @SerializedName("device_id")
     @Expose
     private String deviceId;
-    @SerializedName("position")
-    @Expose
-    @Transient
+//    @SerializedName("position")
+//    @Expose
+//    @Transient
+    @OneToOne
     private Position position;
-    @SerializedName("group")
-    @Expose
-    @Transient
+//    @SerializedName("group")
+//    @Expose
+//    @Transient
+    @OneToOne
     private Group group;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 
     public Integer getId() {
         return id;
@@ -88,14 +95,6 @@ public class Personnel {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public String getPhotoUrl() {
@@ -225,5 +224,13 @@ public class Personnel {
     public void setGroup(Group group) {
         this.group = group;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }
